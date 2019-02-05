@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Hangman from '../components/Hangman'
 
 class Board extends Component {
 
@@ -30,7 +29,6 @@ class Board extends Component {
   render() {
     return (
       <div className="App">
-        <Hangman />
         {this.board()}
         <form onSubmit={this.props.handleSubmit}>
           <input type='text' value={this.props.guess} onChange={this.props.handleChange} maxLength='1'/>

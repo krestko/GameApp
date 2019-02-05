@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import Hangman from '../components/Hangman'
 import Board from '../components/Board';
 
 class GamePage extends Component {
@@ -12,7 +13,7 @@ class GamePage extends Component {
   }
   
   handleChange = (e) => {
-    this.setState({ guess: e.target.value })
+    this.setState({ guess: e.target.value.toLowerCase() })
   }
 
   handleSubmit = (e) => {
@@ -22,26 +23,26 @@ class GamePage extends Component {
         guess: '',
         invalidGuess: true
       })
+    } else if(!this.state.test.includes(this.state.guess)) {
+      return this.setState({ 
+        guesses: [...this.state.guesses, this.state.guess],
+        incorrectGuesses: [...this.state.incorrectGuesses, this.state.guess],
+        guess: ''
+      })
     } else {
       return this.setState({ 
-      guesses: [...this.state.guesses, this.state.guess],
-      guess: ''
+        guesses: [...this.state.guesses, this.state.guess],
+        guess: ''
       })
     }
   }
 
-  handleIncorrectGuesses = (guess) => {
-    this.setState({ incorrectGuesses: [...this.state.incorrectGuesses, guess] })
-  }
-
   render() {
-    if(this.state.guesses.length === 10) {
-      return <Redirect to={`/lose`} />
-    }
-
     return (
       <div className="App">
-        <Board test={this.state.test} guess={this.state.guess} guesses={this.state.guesses} handleChange={this.handleChange} handleSubmit={this.handleSubmit} incorrectGuesses={this.state.incorrectGuesses} invalidGuess={this.state.invalidGuess} handleIncorrectGuesses={this.handleIncorrectGuesses} />
+        <h1>Hangman</h1>
+        <Hangman incorrectGuesses={this.state.incorrectGuesses} />
+        <Board test={this.state.test} guess={this.state.guess} guesses={this.state.guesses} handleChange={this.handleChange} handleSubmit={this.handleSubmit} invalidGuess={this.state.invalidGuess} />
       </div>
     );
   }
