@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 class Board extends Component {
-
   boardResults = () => {
     let counter = 0;
     return this.props.test.map((letter, index) => {

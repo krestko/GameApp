@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Hangman from '../components/Hangman'
 import Board from '../components/Board';
 
-class GamePage extends Component {
+class HangmanPage extends Component {
   state = {
     test: ['Hello', 'Goodbye', 'Hey'][Math.floor(Math.random() * ['Hello', 'Goodbye', 'Hey'].length)].toLowerCase().split(''),
     guess: '',
@@ -48,4 +48,4 @@ class GamePage extends Component {
   }
 }
 
-export default GamePage;
+export default HangmanPage;

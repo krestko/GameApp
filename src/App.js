@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import GamePage from './pages/GamePage';
+import HangmanPage from './pages/HangmanPage';
+import BlackJackPage from './pages/BlackJackPage';
 import Winner from './components/WinnerScreen';
 import Loser from './components/LoserScreen';
 import './App.css';
@@ -12,7 +13,8 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className='App'>
-          <Route exact path='/' component={GamePage} />
+          <Route exact path='/hangman' component={HangmanPage} />
+          <Route exact path='/blackjack' component={BlackJackPage} />
           <Route exact path='/win' component={Winner} />
           <Route exact path='/lose' component={Loser} />
         </div>
