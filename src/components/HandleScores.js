@@ -4,34 +4,45 @@ const mapCards = (cards) => {
     for(let key in card) {
       if(card[key].length === 2) {
         total += 11;
-      } else if(card[key][0] === 10) {
-        console.log(card[key][0])
-        total += 10;
+      } else {
+        total += card[key][0];
       }
     }
   })
-  if(total === 21) {
-    return true;
-  } else {
-    return false;
+  return total;
+}
+
+const checkForBust = (total) => {
+  console.log('BUST CHECK', total)
+  if(total > 21) {
+    return 'Bust';
+  }
+}
+
+const cardValue = (card) => {
+  let cardObj = card[0];
+  for(let key in cardObj) {
+    return cardObj[key][0];
   }
 }
 
 const checkForNatural = (dealerCards, playerCards) => {
   let dealer = dealerCards;
   let player = playerCards;
-  if(dealer === true && player === false) {
-    console.log('DEALER WINS!')
-  } else if(dealer === false && player === true) {
-    console.log('PLAYER WINS!')
-  } else if(dealer === true && player === true) {
-    console.log('TIE GAME!')
+  if(dealer < 21 && player < 21) {
+    return 'POOP';
+  } else if(dealer !== 21 && player === 21) {
+    return 'Player Wins';
+  } else if(player !== 21 && dealer === 21) {
+    return 'Dealer Wins';
   } else {
-    console.log('No Natural This Time.')
+    return 'Tie';
   }
 }
 
 export default {
   mapCards: mapCards,
-  checkForNatural: checkForNatural
+  checkForNatural: checkForNatural,
+  checkForBust: checkForBust,
+  cardValue: cardValue
 }
