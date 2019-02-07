@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BlackJackBoard from '../components/BlackJackBoard'
+import BlackJackGame from '../components/BlackJackGame'
 
 class BlackJackPage extends Component {
   state = {
@@ -23,11 +23,11 @@ class BlackJackPage extends Component {
   }
 
   handleDealerHand = (cards) => {
-    this.setState({ dealerHand: [...this.state.dealerHand, cards] })
+    this.setState({ dealerHand: [...this.state.dealerHand, ...cards] })
   }
 
   handlePlayerHand = (cards) => {
-    this.setState({ playerHand: [...this.state.playerHand, cards] })
+    this.setState({ playerHand: [...this.state.playerHand, ...cards] })
   }
 
   render() {
@@ -35,7 +35,7 @@ class BlackJackPage extends Component {
     return (
       <div className="App">
         <h1>Blackjack</h1>
-        <BlackJackBoard deck={this.state.deck} dealerHand={this.state.dealerHand} playerHand={this.state.playerHand} handleDeal={this.handleDeal} handleDealerHand={this.handleDealerHand} handlePlayerHand={this.handlePlayerHand}/>
+        <BlackJackGame deck={this.state.deck} dealerHand={this.state.dealerHand} playerHand={this.state.playerHand} handleDeal={this.handleDeal} handleDealerHand={this.handleDealerHand} handlePlayerHand={this.handlePlayerHand}/>
       </div>
     );
   }
