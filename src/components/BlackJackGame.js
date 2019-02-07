@@ -1,34 +1,35 @@
 import React, { Component } from 'react';
-import BlackJackTable from './BlackJackTable'
+import BlackJackTable from './BlackJackTable';
+import HandleScores from './HandleScores'
 
 class BlackJackGame extends Component {
   state = {
-    toggleTurn: true,
-    toggleDealButton: true,
-    dealtCardNumber: 0
+    toggleTurn: true
+  }
+
+  handlePlayerDeal = () => {
+    let holdPlayer = (this.props.handleDeal());
+    this.props.handlePlayerHand(holdPlayer);
+  }
+
+  handleDealerDeal = () => {
+    let holdDealer = (this.props.handleDeal());
+    this.props.handleDealerHand(holdDealer);
   }
 
   handleDeal = (e) => {
-    if(this.state.dealtCardNumber === 3) {
-      this.setState({ toggleDealButton: false })
-    } else if(this.state.toggleTurn) {
-      let holdPlayer = (this.props.handleDeal());
-      this.props.handlePlayerHand(holdPlayer);
+    if(this.state.toggleTurn) {
+      this.handlePlayerDeal();
       this.setState({ toggleTurn: false })
     } else {
-      let holdDealer = (this.props.handleDeal());
-      this.props.handleDealerHand(holdDealer);
-      this.setState({ toggleTurn: true })
+      this.handleDealerDeal();
+      if(this.props.playerHand.length === 2) {
+        HandleScores.checkForNatural(HandleScores.mapCards(this.props.dealerHand), HandleScores.mapCards(this.props.playerHand));
+        this.setState({ toggleTurn: null })
+      } else {
+        this.setState({ toggleTurn: true })
+      }
     }
-    this.setState({ dealtCardNumber: this.state.dealtCardNumber += 1 })
-  }
-
-  handlePlayerHit = () => {
-
-  }
-
-  handleDealerHit = () => {
-
   }
 
   // displayPlayerCards = () => {
@@ -43,11 +44,10 @@ class BlackJackGame extends Component {
     // if(this.props.dealerHand.length === 1) {
     //   return <p>Hidden</p>
     // }
-
     return (
       <div className="App">
-        {this.state.toggleDealButton ? <button onClick={this.handleDeal}>Deal</button> : !this.state.toggleDealButton ? <button onClick={this.handleDeal}>Deal Player</button> : null}
-        {!this.state.toggleDealButton ? <button onClick={this.handleDeal}>Deal Dealer</button> : null} 
+        {this.state.toggleTurn !== null ? <button onClick={this.handleDeal}>Deal</button> : this.state.toggleTurn === null ? <button onClick={this.handlePlayerDeal}>Deal Player</button> : null}
+        {this.state.toggleTurn === null ? <button onClick={this.handleDealerDeal}>Deal Dealer</button> : null} 
         <BlackJackTable dealerHand={this.props.dealerHand} playerHand={this.props.playerHand}/>
       </div>
     );

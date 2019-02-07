@@ -1,34 +1,30 @@
 import React, { Component } from 'react';
+import HandleScores from './HandleScores'
+import './BlackJackTable.css';
 
 class BlackJackTable extends Component {
 
   render() {
     let playerKeys = [];
-    let playerProperties = [];
       this.props.playerHand.map(card => {
         for(let key in card) {
           playerKeys.push(key);
-          playerProperties.push(card[key]);
         }
       })
 
     let dealerKeys = [];
-    let dealerProperties = [];
       this.props.dealerHand.map(card => {
         for(let key in card) {
           dealerKeys.push(key);
-          dealerProperties.push(card[key]);
         }
     })
-console.log(dealerKeys)
+
     return (
       <div className="App">
         <h3>Player Cards:</h3>
-        <p>{playerKeys.map(key => `${key} `)}</p>
-        <p>{playerProperties.map(property => `${property} `)}</p>
+        {playerKeys.map((key, index) => <div key={index} className='card'>{key}</div>)}
         <h3>Dealer Cards:</h3>
-        <p>{dealerKeys[1]}</p>
-        <p>{dealerProperties[1]}</p>
+        {dealerKeys.map((key, index) => index === 0 ? <div key={index} className='card'>-------------</div> : <div key={index} className='card'>{key}</div>)}
       </div>
     );
   }
