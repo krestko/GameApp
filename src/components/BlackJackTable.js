@@ -4,27 +4,27 @@ import './BlackJackTable.css';
 
 class BlackJackTable extends Component {
 
+  displayDealerCards = () => {
+    if(this.props.countRound > 3 && this.props.handleTrackTurns() === 'Dealer') {
+      return this.props.dealerKeys.map(card => card);
+    }
+    let firstHand = this.props.dealerKeys.filter((card, index) => index !== 0);
+    firstHand.unshift(this.props.cardBack);
+    return firstHand.map(card => card);
+  }
+
+  displayPlayerCards = () => {
+    return this.props.playerKeys.map(none => none);
+  }
+
   render() {
-    let playerKeys = [];
-      this.props.playerHand.map(card => {
-        for(let key in card) {
-          playerKeys.push(key);
-        }
-      })
-
-    let dealerKeys = [];
-      this.props.dealerHand.map(card => {
-        for(let key in card) {
-          dealerKeys.push(key);
-        }
-    })
-
     return (
       <div className="App">
-        <h3>Player Cards:</h3>
-        {playerKeys.map((key, index) => <div key={index} className='card'>{key}</div>)}
+      {/* {this.props.cardBack} */}
         <h3>Dealer Cards:</h3>
-        {dealerKeys.map((key, index) => index === 0 ? <div key={index} className='card'>-------------</div> : <div key={index} className='card'>{key}</div>)}
+          <div className='dealerCards'>{this.props.dealerKeys.length > 0 ? this.displayDealerCards() : null}</div>
+        <h3>Player Cards:</h3>
+          <div className='playerCards'>{this.displayPlayerCards()}</div>
       </div>
     );
   }
